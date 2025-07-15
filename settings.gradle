@@ -1,0 +1,5 @@
+rootProject.name = 'CargoProject'
+include 'models'
+include 'repository'
+include 'services'
+include 'controllers'
