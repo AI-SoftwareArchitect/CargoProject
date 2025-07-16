@@ -13,37 +13,28 @@ java {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // MapStruct (DTO ↔ Entity dönüşümleri)
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-
-    implementation project(':models')
-    implementation project(':repository')
-
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // Spring Web bağımlılığı: ResponseEntity, HttpStatus ve Jackson (JsonInclude) için
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    
+    // Lombok bağımlılıkları: @Getter, @Setter gibi anotasyonlar için
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+// 'utils' gibi kütüphane modülleri için `bootJar` görevi genellikle devre dışı bırakılır.
 bootJar {
     enabled = false
 }
 
+// Standart bir JAR dosyası oluşturulmasını sağlar.
 jar {
     enabled = true
 }
