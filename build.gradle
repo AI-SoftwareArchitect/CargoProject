@@ -1,23 +1,65 @@
 plugins {
-    id 'java'
     id 'org.springframework.boot' version '3.5.3'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
 }
 
-group = 'com.cargo'
-version = '0.0.1-SNAPSHOT'
+allprojects {
+    group = 'com.cargo'
+    version = '1.0.0'
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+    repositories {
+        mavenCentral()
     }
 }
 
-repositories {
-    mavenCentral()
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management' // BU ÇOK ÖNEMLİ!
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    dependencies {
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:3.2.5"
+        }
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
 }
 
+// Ana uygulama bağımlılıkları
 dependencies {
+    implementation project(':models')
+    implementation project(':repository')
+    implementation project(':services')
+    implementation project(':security')
+    implementation project(':controllers')
+    implementation project(':utils')
+
+    constraints {
+        implementation('io.jsonwebtoken:jjwt-api') {
+            version { strictly '0.12.6' }
+        }
+        runtimeOnly('io.jsonwebtoken:jjwt-impl') {
+            version { strictly '0.12.6' }
+        }
+        runtimeOnly('io.jsonwebtoken:jjwt-jackson') {
+            version { strictly '0.12.6' }
+        }
+    }
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -25,15 +67,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     runtimeOnly 'org.postgresql:postgresql'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 springBoot {
-    mainClass = 'com.cargo.CargoProjectApplication' // Assuming your main class is CargoProjectApplication in com.cargo package
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
+    mainClass = "com.cargo.CargoProjectApplication"
 }

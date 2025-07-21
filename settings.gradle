@@ -1,6 +1,10 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
 rootProject.name = 'CargoProject'
-include 'models'
-include 'repository'
-include 'services'
-include 'controllers'
-include 'utils'
+include 'models', 'repository', 'services', 'security', 'controllers', 'utils'
+

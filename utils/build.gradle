@@ -1,42 +1,37 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.5.3'
-    id 'io.spring.dependency-management' version '1.1.7'
+    id 'java-library'
 }
 
-group = 'com.cargo'
-version = '0.0.1-SNAPSHOT'
+repositories { mavenCentral() }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
-repositories {
-    mavenCentral()
-}
 
 dependencies {
-    // Spring Web bağımlılığı: ResponseEntity, HttpStatus ve Jackson (JsonInclude) için
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    
-    // Lombok bağımlılıkları: @Getter, @Setter gibi anotasyonlar için
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    implementation project(":models")
+    implementation project(":repository")
 
+    // Rate limiter
+    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.6.0'
+
+    // Spring Security
+    api 'org.springframework.boot:spring-boot-starter-security'
+
+    // JWT (versiyonları açık yazıldı)
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    // Spring Boot Starter
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    // Test dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-// 'utils' gibi kütüphane modülleri için `bootJar` görevi genellikle devre dışı bırakılır.
-bootJar {
-    enabled = false
-}
-
-// Standart bir JAR dosyası oluşturulmasını sağlar.
-jar {
-    enabled = true
 }
 
 tasks.named('test') {

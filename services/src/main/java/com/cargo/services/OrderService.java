@@ -30,6 +30,12 @@ public class OrderService {
         this.userService = userService;
     }
 
+    public Page<OrderDto> getOrdersWithPagination(Pageable pageable) {
+            Page<Order> orders = orderRepository.findAll(pageable);
+            Page<OrderDto> orderDtos = orders.map(orderMapper::toDto);
+            return orderDtos;
+    }
+
     /**
      * Sipariş entity'sini ID ile getirir. Diğer servislerin kullanması için.
      * @param id Sipariş ID'si
