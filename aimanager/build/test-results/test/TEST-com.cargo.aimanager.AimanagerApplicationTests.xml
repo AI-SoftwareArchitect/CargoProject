@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.cargo.aimanager.AimanagerApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-08-17T21:15:11.699Z" hostname="DOGU" time="0.012">
+<testsuite name="com.cargo.aimanager.AimanagerApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-08-18T11:13:14.715Z" hostname="DOGU" time="0.011">
   <properties/>
-  <testcase name="contextLoads()" classname="com.cargo.aimanager.AimanagerApplicationTests" time="0.012"/>
+  <testcase name="contextLoads()" classname="com.cargo.aimanager.AimanagerApplicationTests" time="0.011"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
